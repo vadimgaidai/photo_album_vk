@@ -8,6 +8,7 @@
 		</p>
 		<button 
 			class="authorize__button"
+			@click="openPopup"
 		>
 			Login
 		</button>
@@ -21,8 +22,32 @@ export default {
 		}
 	},
 	computed: {
-		duplicate () {
-			return
+		data () {
+			return {
+				
+			}
+		}
+	},
+	methods: {
+		openPopup () {
+			let link = ''
+			let title = document.title
+			link = process.env.VUE_APP_VK_API
+			link = encodeURI(link)
+			this.popupWindow = window.open(
+				link,
+				title,
+				[
+					'toolbar=0',
+					'status=0',
+					'scrollbars=1',
+					'width=700',
+					'height=480',
+					'left=' + (screen.availWidth / 2 - 320),
+					'top=' + (screen.availHeight / 2 - 240),
+					'toolbar=0'
+				].join(',')
+			)
 		}
 	}
 }
