@@ -4,8 +4,13 @@
 			Authorize
 		</h2>
 		<p class="authorize__text">
-			Log in through the social network <a href="https://vk.com/" class="authorize__link">VK</a> and allow access to your account
+			Log in through the social network service <a href="https://vk.com/" class="authorize__link" target="_blank">VK</a> and allow access to your account
 		</p>
+		<button 
+			class="authorize__button"
+		>
+			Login
+		</button>
 	</section>
 </template>
 

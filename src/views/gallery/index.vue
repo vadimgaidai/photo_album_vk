@@ -1,7 +1,19 @@
 <template>
 	<Main class="gallery">
-		<div class="gallery__inner">
-			<Authorize />
+		<h1 class="gallery__title">
+			Gallery
+		</h1>
+		<div 
+			class="gallery__inner"
+			:class="{'_authorize': !authorize}"
+		>
+			<Authorize v-if="!authorize"/>
+			<template v-else>
+				<Card 
+					v-for="card in 10"
+					:key="card.id"
+				/>
+			</template>
 		</div>
 	</Main>
 </template>
@@ -10,6 +22,7 @@
 import Main from '@/components/main/'
 import Icon from '@/components/SvgIcon'
 import Authorize from '@/components/authorize'
+import Card from '@/components/card'
 
 import { mapGetters, mapActions } from 'vuex'
 
@@ -18,10 +31,12 @@ export default {
 	components: {
 		Main,
 		Icon,
-		Authorize
+		Authorize,
+		Card
 	},
 	data () {
 		return {
+			authorize: false
 		}
 	}
 }

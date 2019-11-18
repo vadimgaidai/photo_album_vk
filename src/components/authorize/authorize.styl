@@ -1,2 +1,32 @@
 .authorize
-	//
+	&__title 
+		text-align center
+		font-weight 700
+		color $mainColor
+		padding-bottom 1rem
+	&__text
+		text-align center
+		font-weight 400
+		color $mainColor
+		padding-bottom 3rem
+	&__link
+		color $mainColor
+		transition all $mainTransition ease
+		&:hover 
+			color rgba($mainColor, .7)
+	&__button 
+		display block
+		margin: 0 auto 0
+		border .1rem solid $cardsBg
+		background-color $cardsBg
+		color $mainBg
+		font-weight 700
+		padding: 1rem 3rem
+		border-radius: .5rem
+		cursor pointer
+		transition all $mainTransition ease
+		&:hover 
+			background-color $mainBg
+			color $cardsBg
+		&:active 
+			transform: translateY(3px)
