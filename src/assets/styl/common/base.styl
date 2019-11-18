@@ -1,0 +1,36 @@
+* {
+	box-sizing: border-box;
+	-webkit-tap-highlight-color: transparent;
+
+	&:before,
+	&:after {
+		box-sizing: border-box;
+	}
+}
+
+html {
+	font-size: 10px;
+	overflow-y scroll
+	scroll-behavior smooth
+}
+
+body {
+	font: 1.6rem/1.5 $fontPrimary
+}
+
+a, button, input{
+	&:focus{
+		outline: 0;
+	}
+}
+
+h1,h2,h3,h4,h5,h6,p,span
+	margin 0
+
+[type="text/template"] {
+	display: none;
+}
+
+._noScroll
+	overflow hidden
+
