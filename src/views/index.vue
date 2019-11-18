@@ -11,9 +11,9 @@ import Main from '@/components/main/'
 
 export default {
 	name: 'index',
-  components: {
+	components: {
 		Main
-  }
+	}
 }
 </script>
 

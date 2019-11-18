@@ -23,8 +23,8 @@ export default {
 					to: '/'
 				},
 				{
-					text: 'Test API',
-					to: '/test'
+					text: 'Gallery',
+					to: '/gallery'
 				}
 			]
 		}

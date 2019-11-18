@@ -2,10 +2,10 @@
   <div id="app">
     <Header ref="header"/>
     <router-view
-			:style="'min-height: calc(100vh - ' + mainHeight + 'px);'"
-		/>
-		<Footer ref="footer"/>
-		<Preloader v-show="preloader"/>
+		:style="'min-height: calc(100vh - ' + mainHeight + 'px);'"
+	/>
+	<Footer ref="footer"/>
+	<Preloader v-show="preloader"/>
   </div>
 </template>
 
@@ -48,7 +48,7 @@ export default {
 .fade-enter-active, .fade-leave-active {
   transition: opacity .5s;
 }
-.fade-enter, .fade-leave-to /* .fade-leave-active до версии 2.1.8 */ {
+.fade-enter, .fade-leave-to {
   opacity: 0;
 }
 </style>

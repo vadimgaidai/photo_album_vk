@@ -5,7 +5,6 @@ import index from './views/index.vue'
 Vue.use(Router)
 
 export default new Router({
-	mode: 'history',
   routes: [
     {
       path: '/',
@@ -13,12 +12,12 @@ export default new Router({
       component: index
     },
     {
-      path: '/test',
-      name: 'test',
+      path: '/gallery',
+      name: 'gallery',
       // route level code-splitting
       // this generates a separate chunk (test.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "test" */ './views/test/')
+      component: () => import(/* webpackChunkName: "test" */ './views/gallery/')
     }
   ]
 })

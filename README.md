@@ -1,4 +1,4 @@
-# templates
+# Photo Album VK
 
 ## Project setup
 ```
