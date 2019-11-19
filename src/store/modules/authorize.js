@@ -1,7 +1,6 @@
 export default {
     state: {
         authorize: '',
-        albums: [],
         user: ''
     },
     actions: {
@@ -13,9 +12,6 @@ export default {
         },
         checkStatus({commit}) {
             commit('SET_CHECK_USER')
-        },
-        async loadPhotoAlbums ({commit}) {
-            await commit('SET_PHOTO_ALBUMS')
         }
     },
     mutations: {
@@ -36,27 +32,11 @@ export default {
             VK.Observer.subscribe('auth.statusChange', (response) => {
                 state.authorize = response.status
             })
-        },
-        SET_PHOTO_ALBUMS (state) {
-            VK.Api.call(
-                'photos.getAlbums', // название метода API https://vk.com/dev/methods
-                // параметры:
-                {
-                    need_system: 1,
-                    photo_sizes: 1,
-                    v: '5.52', // версия API (обязательный параметр)
-                }, (response) => {
-                    state.albums = response.response.items
-                }
-            )
         }
     },
     getters: {
         getAuthorize(state) {
             return state.authorize
-        },
-        getAlbums(state) {
-            return state.albums
         },
         getUser(state) {
             return state.user

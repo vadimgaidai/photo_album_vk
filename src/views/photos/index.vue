@@ -1,6 +1,6 @@
 <template>
 	<Main class="photos">
-		photos
+		{{returnPhotos}}
 	</Main>
 </template>
 
@@ -20,8 +20,31 @@ export default {
 		Main,
 		Load
 	},
+	async mounted() {
+		await this.$store.dispatch('loadPhotos', this.getId)
+	},
 	data () {
 		return {
+		}
+	},
+	computed: {
+		...mapGetters([
+			'getPhotosId',
+			'getPhotos'
+		]),
+		getId() {
+			if (this.getPhotosId && this.$route.params.photos) {
+				return this.getPhotosId(this.$route.params.photos)
+			} else {
+				return ''
+			}
+		},
+		returnPhotos() {
+			if (this.getPhotos && this.getPhotos.length > 0) {
+				return this.getPhotos
+			} else {
+				return []
+			}
 		}
 	}
 }
