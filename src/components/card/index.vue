@@ -12,12 +12,21 @@
 					class="card__album"
 					v-if="elemets ==='albums'"
 				>
-					<h3 class="card__album--title">
-						Name: {{item.title}}
-					</h3>
-					<span class="card__album--size">
-						Size: {{item.size}}
-					</span>
+					<div class="card__album--wrap">
+						<img 
+							class="card__album--image"
+							:src="item.thumb_src" 
+							:alt="item.title"
+						>
+					</div>
+					<div class="card__album--wrap">
+						<h3 class="card__album--title">
+							Name: {{item.title}}
+						</h3>
+						<span class="card__album--size">
+							Size: {{item.size}}
+						</span>
+					</div>
 				</div>
 			</div>
 			<Load v-else/>

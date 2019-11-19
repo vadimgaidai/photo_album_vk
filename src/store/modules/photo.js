@@ -19,8 +19,8 @@ export default {
                 'photos.getAlbums', // название метода API https://vk.com/dev/methods
                 // параметры:
                 {
+                    need_covers: 1,
                     need_system: 1,
-                    photo_sizes: 1,
                     v: '5.52', // версия API (обязательный параметр)
                 }, (response) => {
                     state.albums = response.response.items
@@ -28,7 +28,6 @@ export default {
             )
         },
         SET_PHOTOS(state, item) {
-            console.log(item)
             if (item && state.albums && state.albums.length > 0) {
                 VK.Api.call(
                     'photos.get', // название метода API https://vk.com/dev/methods
@@ -37,7 +36,6 @@ export default {
                         album_id: item.id,
                         v: '5.52', // версия API (обязательный параметр)
                     }, (response) => {
-                        console.log(response)
                         state.photos = response.response.items
                     }
                 )

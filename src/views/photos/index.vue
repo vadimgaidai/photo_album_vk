@@ -1,6 +1,12 @@
 <template>
 	<Main class="photos">
-		{{returnPhotos}}
+
+		<img 
+			v-for="item in returnPhotos"
+			:key="item.id"
+			:src="item.photo_604" 
+			alt=""
+		>
 	</Main>
 </template>
 
