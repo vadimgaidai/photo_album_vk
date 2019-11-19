@@ -17,7 +17,7 @@ export default {
         }
     },
     mutations: {
-        SET_LOGIN_USER({commit}, state) {
+        SET_LOGIN_USER(state) {
             VK.Auth.login((response) => {
                 state.authorize = response.status
                 if (response.status === 'connected') {
@@ -35,16 +35,16 @@ export default {
                 state.authorize = response.status
             })
         },
-        SET_PHOTO_ALBUMS (state) {
-            // VK.Api.call(
-            //     'photos.getAlbums', // название метода API https://vk.com/dev/methods
-            //     // параметры:
-            //     {
-            //         v: '5.52', // версия API (обязательный параметр)
-            //     }, (response) => {
-            //         console.log(response)
-            //     }
-            // )
+        SET_PHOTO_ALBUMS () {
+            VK.Api.call(
+                'photos.getAlbums', // название метода API https://vk.com/dev/methods
+                // параметры:
+                {
+                    v: '5.52', // версия API (обязательный параметр)
+                }, (response) => {
+                    console.log(response)
+                }
+            )
         }
     },
     getters: {

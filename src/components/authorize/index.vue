@@ -38,6 +38,7 @@ export default {
 			apiId: process.env.VUE_APP_VK_ID
 		})
 		this.$store.dispatch('checkStatus')
+		this.setContent()
 	},
 	methods: {
 		authorize() {
@@ -51,24 +52,14 @@ export default {
 		},
 		logoutUser () {
 			this.$store.dispatch('logoutUser')
-		}
-	},
-	computed: {
-		...mapGetters([
-			'getAuthorize'
-		])
-	},
-	watch: {
-		'$route' () {
-			this.$store.dispatch('checkStatus')
 		},
-		'getAuthorize' () {
+		setContent() {
 			switch(this.getAuthorize) {
 				case 'connected': 
+					this.$store.dispatch('loadPhotoAlbums')
 					this.title = 'Thanks!'
 					this.text = ''
 					this.btn = 'Logout'
-					this.$store.dispatch('loadPhotoAlbums')
 					break
 				case 'not_authorized': 
 					this.title = 'Access'
@@ -81,6 +72,20 @@ export default {
 					this.btn = 'Login'
 					break
 			}
+		}
+	},
+	computed: {
+		...mapGetters([
+			'getAuthorize'
+		])
+	},
+	watch: {
+		'$route' () {
+			this.$store.dispatch('checkStatus')
+			this.setContent()
+		},
+		'getAuthorize' () {
+			this.setContent()
 		}
 	}
 }
