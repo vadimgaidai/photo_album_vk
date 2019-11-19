@@ -1,32 +1,43 @@
 <template>
 	<Main class="photos">
 		<div class="photos__inner">
-			<div class="photos__column">
-				<Card 
-					v-for="card in filterOne"
-					:key="card.id"
-					:item="card"
-					:elemets="'photos'"
-					:slug="String(card.id)"
-				/>
-			</div>
-			<div class="photos__column">
-				<Card 
-					v-for="card in filterTwo"
-					:key="card.id"
-					:item="card"
-					:elemets="'photos'"
-					:slug="String(card.id)"
-				/>
-			</div>
-			<div class="photos__column">
-				<Card 
-					v-for="card in filterThree"
-					:key="card.id"
-					:item="card"
-					:elemets="'photos'"
-					:slug="String(card.id)"
-				/>
+			<h1 class="photos__title">
+				Photos from the album "{{$route.params.photos}}"
+			</h1>
+			<button 
+				class="photos__back"
+				@click="getBack"
+			>
+				&lt; Back to gallery
+			</button>
+			<div class="photos__content">
+				<div class="photos__column">
+					<Card 
+						v-for="card in filterOne"
+						:key="card.id"
+						:item="card"
+						:elemets="'photos'"
+						:slug="String(card.id)"
+					/>
+				</div>
+				<div class="photos__column">
+					<Card 
+						v-for="card in filterTwo"
+						:key="card.id"
+						:item="card"
+						:elemets="'photos'"
+						:slug="String(card.id)"
+					/>
+				</div>
+				<div class="photos__column">
+					<Card 
+						v-for="card in filterThree"
+						:key="card.id"
+						:item="card"
+						:elemets="'photos'"
+						:slug="String(card.id)"
+					/>
+				</div>
 			</div>
 		</div>
 	</Main>
@@ -55,6 +66,11 @@ export default {
 	},
 	data () {
 		return {
+		}
+	},
+	methods: {
+		getBack () {
+			this.$router.push('/gallery')
 		}
 	},
 	computed: {
