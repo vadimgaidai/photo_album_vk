@@ -1,53 +1,85 @@
 <template>
 	<section class="authorize">
-		<h2 class="authorize__title">
-			Authorize
-		</h2>
-		<p class="authorize__text">
-			Log in through the social network service <a href="https://vk.com/" class="authorize__link" target="_blank">VK</a> and allow access to your account
-		</p>
-		<button 
-			class="authorize__button"
-			@click="openPopup"
+		<div 
+			class="authorize__wrap"
 		>
-			Login
-		</button>
+			<h2 class="authorize__title">
+				{{title}}
+			</h2>
+			<div 
+				class="authorize__text" 
+				v-html="text"
+				v-show="text"
+			>
+			</div>
+			<button 
+				class="authorize__button"
+				@click="authorize"
+			>
+				{{btn}}
+			</button>
+		</div>
 	</section>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
 	data () {
 		return {
+			title: 'Authorize',
+			text: '<p>Log in through the social network service <a href="https://vk.com/" class="authorize__link" target="_blank">VK</a> and allow access to your account</p>',
+			btn: 'Login'
+		}
+	},
+	async mounted() {
+		await VK.init({
+			apiId: process.env.VUE_APP_VK_ID
+		})
+		this.$store.dispatch('checkStatus')
+	},
+	methods: {
+		authorize() {
+			this.$store.dispatch('checkStatus')
+			setTimeout(()=> {
+				(this.getAuthorize === '' || this.getAuthorize !== 'connected') ? this.loginUser() : this.logoutUser()
+			}, 10)
+		},
+		loginUser () {
+			this.$store.dispatch('loginUser')
+		},
+		logoutUser () {
+			this.$store.dispatch('logoutUser')
 		}
 	},
 	computed: {
-		data () {
-			return {
-				
-			}
-		}
+		...mapGetters([
+			'getAuthorize'
+		])
 	},
-	methods: {
-		openPopup () {
-			let link = ''
-			let title = document.title
-			link = process.env.VUE_APP_VK_API
-			link = encodeURI(link)
-			this.popupWindow = window.open(
-				link,
-				title,
-				[
-					'toolbar=0',
-					'status=0',
-					'scrollbars=1',
-					'width=700',
-					'height=480',
-					'left=' + (screen.availWidth / 2 - 320),
-					'top=' + (screen.availHeight / 2 - 240),
-					'toolbar=0'
-				].join(',')
-			)
+	watch: {
+		'$route' () {
+			this.$store.dispatch('checkStatus')
+		},
+		'getAuthorize' () {
+			switch(this.getAuthorize) {
+				case 'connected': 
+					this.title = 'Thanks!'
+					this.text = ''
+					this.btn = 'Logout'
+					break
+				case 'not_authorized': 
+					this.title = 'Access'
+					this.text = '<p>Please allow access to your account ^_^</p>'
+					this.btn = 'Access'
+					break
+				case 'unknown': 
+					this.title = 'Authorize'
+					this.text = '<p>Log in through the social network service <a href="https://vk.com/" class="authorize__link" target="_blank">VK</a> and allow access to your account</p>'
+					this.btn = 'Login'
+					break
+			}
 		}
 	}
 }

@@ -3,17 +3,14 @@
 		<h1 class="gallery__title">
 			Gallery
 		</h1>
-		<div 
-			class="gallery__inner"
-			:class="{'_authorize': !authorize}"
-		>
-			<Authorize v-if="!authorize"/>
-			<template v-else>
-				<Card 
+		<div class="gallery__inner">
+			<Authorize/>
+			<div class="gallery__wrap">
+				<!-- <Card 
 					v-for="card in 10"
 					:key="card.id"
-				/>
-			</template>
+				/> -->
+			</div>
 		</div>
 	</Main>
 </template>
@@ -36,7 +33,6 @@ export default {
 	},
 	data () {
 		return {
-			authorize: false
 		}
 	}
 }
