@@ -4,12 +4,25 @@
 			Gallery
 		</h1>
 		<div class="gallery__inner">
-			<Authorize :authorize="getAuthorize"/>
-			<div class="gallery__wrap">
-				<!-- <Card 
-					v-for="card in 10"
-					:key="card.id"
-				/> -->
+			<Authorize 
+				:user="getUser"
+				:authorize="getAuthorize"
+			/>   
+			<div class="gallery__wrap" v-if="getAuthorize === 'connected'">
+				<transition name="content" mode="out-in">
+					<div
+						v-if="getAlbums && getAlbums.length > 0"
+					>
+						<Card 
+							v-for="card in getAlbums"
+							:key="card.id"
+							:item="card"
+							:elemets="'albums'"
+							:slug="'gallery/'"
+						/>
+					</div>
+					<Load v-else/>
+				</transition>
 			</div>
 		</div>
 	</Main>
@@ -20,16 +33,22 @@ import Main from '@/components/main/'
 import Icon from '@/components/SvgIcon'
 import Authorize from '@/components/authorize'
 import Card from '@/components/card'
+import Load from '@/components/load'
 
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
+	transition: {
+		name: 'fade',
+		mode: 'out-in'
+	},
 	name: 'gallery',
 	components: {
 		Main,
 		Icon,
 		Authorize,
-		Card
+		Card,
+		Load
 	},
 	data () {
 		return {
@@ -45,7 +64,9 @@ export default {
 	},
 	computed: {
 		...mapGetters([
-			'getAuthorize'
+			'getAuthorize',
+			'getUser',
+			'getAlbums'
 		])
 	},
 	watch: {

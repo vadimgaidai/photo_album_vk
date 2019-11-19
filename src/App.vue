@@ -51,4 +51,11 @@ export default {
 .fade-enter, .fade-leave-to {
   opacity: 0;
 }
+
+.content-enter-active, .content-leave-active {
+  transition: opacity .5s ease-in-out;
+}
+.content-enter, .content-leave-to  {
+  opacity: 0;
+}
 </style>

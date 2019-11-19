@@ -18,6 +18,22 @@ export default new Router({
       // this generates a separate chunk (test.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () => import(/* webpackChunkName: "test" */ './views/gallery/')
+    },
+    {
+      path: '/gallery/:photos',
+      name: 'photos',
+      // route level code-splitting
+      // this generates a separate chunk (test.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import(/* webpackChunkName: "test" */ './views/photos/')
+    },
+    {
+      path: '/gallery/:photos/:onePhoto',
+      name: 'onePhoto',
+      // route level code-splitting
+      // this generates a separate chunk (test.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import(/* webpackChunkName: "test" */ './views/onePhoto/')
     }
   ]
 })

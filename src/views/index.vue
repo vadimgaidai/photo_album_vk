@@ -12,6 +12,10 @@
 import Main from '@/components/main/'
 
 export default {
+	transition: {
+		name: 'fade',
+		mode: 'out-in'
+	},
 	name: 'index',
 	components: {
 		Main

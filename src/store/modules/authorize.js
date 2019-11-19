@@ -1,7 +1,8 @@
 export default {
     state: {
         authorize: '',
-        albums: []
+        albums: [],
+        user: ''
     },
     actions: {
         loginUser({commit}) {
@@ -22,7 +23,7 @@ export default {
             VK.Auth.login((response) => {
                 state.authorize = response.status
                 if (response.status === 'connected') {
-                    console.log(response)
+                    state.user = response.session.user.first_name + ' ' + response.session.user.last_name
                 }
 			},VK.access.PHOTOS)
         },
@@ -41,9 +42,11 @@ export default {
                 'photos.getAlbums', // название метода API https://vk.com/dev/methods
                 // параметры:
                 {
+                    need_system: 1,
+                    photo_sizes: 1,
                     v: '5.52', // версия API (обязательный параметр)
                 }, (response) => {
-                    state.albums = response.items
+                    state.albums = response.response.items
                 }
             )
         }
@@ -54,6 +57,9 @@ export default {
         },
         getAlbums(state) {
             return state.albums
+        },
+        getUser(state) {
+            return state.user
         }
     }
 }

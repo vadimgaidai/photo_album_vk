@@ -6,6 +6,9 @@
 		>
 			<h2 class="authorize__title">
 				{{title}}
+				<span v-show="authorize === 'connected'">
+					{{user}}!
+				</span>
 			</h2>
 			<div 
 				class="authorize__text" 
@@ -28,6 +31,10 @@
 export default {
 	props: {
 		authorize: {
+			type: String,
+			default: ''
+		},
+		user: {
 			type: String,
 			default: ''
 		}
@@ -61,7 +68,7 @@ export default {
 		setContent() {
 			switch(this.authorize) {
 				case 'connected': 
-					this.title = 'Thanks!'
+					this.title = 'Welcome, '
 					this.text = ''
 					this.btn = 'Logout'
 					break

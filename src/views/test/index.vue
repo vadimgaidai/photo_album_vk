@@ -27,6 +27,10 @@ import Icon from '@/components/SvgIcon'
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
+	transition: {
+		name: 'fade',
+		mode: 'out-in'
+	},
 	name: 'test',
 	components: {
 		Main,

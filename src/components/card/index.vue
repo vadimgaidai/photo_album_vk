@@ -1,7 +1,28 @@
 <template>
-	<section class="card">
-		<Load v-show="!load" />
-	</section>
+	<router-link 
+		:to="slug + item.title"
+		class="card"
+	>
+		<transition name="content" mode="out-in">
+			<div 
+				class="card__inner" 
+				v-if="item"
+			>
+				<div 
+					class="card__album"
+					v-if="elemets ==='albums'"
+				>
+					<h3 class="card__album--title">
+						Name: {{item.title}}
+					</h3>
+					<span class="card__album--size">
+						Size: {{item.size}}
+					</span>
+				</div>
+			</div>
+			<Load v-else/>
+		</transition>
+	</router-link>
 </template>
 
 <script>
@@ -11,6 +32,23 @@ import Load from '@/components/load'
 
 export default {
 	name: 'card',
+	props: {
+		elemets: {
+			type: String, 
+			default: ''
+		},
+		slug: {
+			type: String, 
+			default: ''
+		},
+		item: {
+			type: Object,
+			default: () => {
+				return {
+				}
+			}
+		}
+	},
 	components: {
 		Icon,
 		Load
