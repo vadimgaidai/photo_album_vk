@@ -4,7 +4,7 @@
 			Gallery
 		</h1>
 		<div class="gallery__inner">
-			<Authorize/>
+			<Authorize :authorize="getAuthorize"/>
 			<div class="gallery__wrap">
 				<!-- <Card 
 					v-for="card in 10"
@@ -33,6 +33,27 @@ export default {
 	},
 	data () {
 		return {
+		}
+	},
+	async mounted() {
+		await this.$store.dispatch('checkStatus')
+	},
+	methods: {
+		loadAlbums() {
+			this.$store.dispatch('loadPhotoAlbums')
+		}
+	},
+	computed: {
+		...mapGetters([
+			'getAuthorize'
+		])
+	},
+	watch: {
+		'$route' () {
+			this.$store.dispatch('checkStatus')
+		},
+		'getAuthorize' () {
+			this.getAuthorize === 'connected' ? this.loadAlbums() : null
 		}
 	}
 }

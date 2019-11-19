@@ -1,6 +1,7 @@
 export default {
     state: {
-        authorize: ''
+        authorize: '',
+        albums: []
     },
     actions: {
         loginUser({commit}) {
@@ -35,14 +36,14 @@ export default {
                 state.authorize = response.status
             })
         },
-        SET_PHOTO_ALBUMS () {
+        SET_PHOTO_ALBUMS (state) {
             VK.Api.call(
                 'photos.getAlbums', // название метода API https://vk.com/dev/methods
                 // параметры:
                 {
                     v: '5.52', // версия API (обязательный параметр)
                 }, (response) => {
-                    console.log(response)
+                    state.albums = response.items
                 }
             )
         }
@@ -50,6 +51,9 @@ export default {
     getters: {
         getAuthorize(state) {
             return state.authorize
+        },
+        getAlbums(state) {
+            return state.albums
         }
     }
 }

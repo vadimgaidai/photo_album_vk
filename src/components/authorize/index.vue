@@ -2,6 +2,7 @@
 	<section class="authorize">
 		<div 
 			class="authorize__wrap"
+			:class="{'_login' : authorize === 'connected'}"
 		>
 			<h2 class="authorize__title">
 				{{title}}
@@ -14,7 +15,7 @@
 			</div>
 			<button 
 				class="authorize__button"
-				@click="authorize"
+				@click="authorizeSubmit"
 			>
 				{{btn}}
 			</button>
@@ -23,9 +24,14 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
 
 export default {
+	props: {
+		authorize: {
+			type: String,
+			default: ''
+		}
+	},
 	data () {
 		return {
 			title: 'Authorize',
@@ -37,14 +43,13 @@ export default {
 		await VK.init({
 			apiId: process.env.VUE_APP_VK_ID
 		})
-		this.$store.dispatch('checkStatus')
 		this.setContent()
 	},
 	methods: {
-		authorize() {
+		authorizeSubmit() {
 			this.$store.dispatch('checkStatus')
 			setTimeout(()=> {
-				(this.getAuthorize === '' || this.getAuthorize !== 'connected') ? this.loginUser() : this.logoutUser()
+				(this.authorize === '' || this.authorize !== 'connected') ? this.loginUser() : this.logoutUser()
 			}, 10)
 		},
 		loginUser () {
@@ -54,9 +59,8 @@ export default {
 			this.$store.dispatch('logoutUser')
 		},
 		setContent() {
-			switch(this.getAuthorize) {
+			switch(this.authorize) {
 				case 'connected': 
-					this.$store.dispatch('loadPhotoAlbums')
 					this.title = 'Thanks!'
 					this.text = ''
 					this.btn = 'Logout'
@@ -74,17 +78,8 @@ export default {
 			}
 		}
 	},
-	computed: {
-		...mapGetters([
-			'getAuthorize'
-		])
-	},
 	watch: {
-		'$route' () {
-			this.$store.dispatch('checkStatus')
-			this.setContent()
-		},
-		'getAuthorize' () {
+		'authorize' () {
 			this.setContent()
 		}
 	}
