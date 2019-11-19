@@ -1,18 +1,41 @@
 <template>
 	<Main class="photos">
-
-		<img 
-			v-for="item in returnPhotos"
-			:key="item.id"
-			:src="item.photo_604" 
-			alt=""
-		>
+		<div class="photos__inner">
+			<div class="photos__column">
+				<Card 
+					v-for="card in filterOne"
+					:key="card.id"
+					:item="card"
+					:elemets="'photos'"
+					:slug="String(card.id)"
+				/>
+			</div>
+			<div class="photos__column">
+				<Card 
+					v-for="card in filterTwo"
+					:key="card.id"
+					:item="card"
+					:elemets="'photos'"
+					:slug="String(card.id)"
+				/>
+			</div>
+			<div class="photos__column">
+				<Card 
+					v-for="card in filterThree"
+					:key="card.id"
+					:item="card"
+					:elemets="'photos'"
+					:slug="String(card.id)"
+				/>
+			</div>
+		</div>
 	</Main>
 </template>
 
 <script>
 import Main from '@/components/main/'
 import Load from '@/components/load'
+import Card from '@/components/card'
 
 import { mapGetters, mapActions } from 'vuex'
 
@@ -24,7 +47,8 @@ export default {
 	name: 'photos',
 	components: {
 		Main,
-		Load
+		Load,
+		Card
 	},
 	async mounted() {
 		await this.$store.dispatch('loadPhotos', this.getId)
@@ -51,6 +75,33 @@ export default {
 			} else {
 				return []
 			}
+		},
+		filterOne () {
+			let newArray = []
+			for (let i = 0; i < this.returnPhotos.length; i++) {
+				if ((i % 3) === 0) {
+					newArray.push(this.returnPhotos[i])
+				}
+			}
+			return newArray
+		},
+		filterTwo () {
+			let newArray = []
+			for (let i = 0; i < this.returnPhotos.length; i++) {
+				if ((i % 3) === 1) {
+					newArray.push(this.returnPhotos[i])
+				}
+			}
+			return newArray
+		},
+		filterThree () {
+			let newArray = []
+			for (let i = 0; i < this.returnPhotos.length; i++) {
+				if ((i % 3) === 2) {
+					newArray.push(this.returnPhotos[i])
+				}
+			}
+			return newArray
 		}
 	}
 }

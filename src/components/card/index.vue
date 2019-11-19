@@ -1,6 +1,6 @@
 <template>
 	<router-link 
-		:to="slug + item.title"
+		:to="slug"
 		class="card"
 	>
 		<transition name="content" mode="out-in">
@@ -27,6 +27,15 @@
 							Size: {{item.size}}
 						</span>
 					</div>
+				</div>
+				<div 
+					class="card__photos"
+					v-if="elemets ==='photos'"
+				>
+					<img 
+						:src="item.photo_1280" 
+						:alt="item.id" 
+						class="card__photos--image">
 				</div>
 			</div>
 			<Load v-else/>

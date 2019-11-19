@@ -18,7 +18,7 @@
 							:key="card.id"
 							:item="card"
 							:elemets="'albums'"
-							:slug="'gallery/'"
+							:slug="'gallery/' + card.title"
 						/>
 					</div>
 					<Load v-else/>
