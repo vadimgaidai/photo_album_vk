@@ -68,6 +68,7 @@ export default {
 					this.title = 'Thanks!'
 					this.text = ''
 					this.btn = 'Logout'
+					this.$store.dispatch('loadPhotoAlbums')
 					break
 				case 'not_authorized': 
 					this.title = 'Access'
