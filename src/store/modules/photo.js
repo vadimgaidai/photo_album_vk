@@ -80,7 +80,7 @@ export default {
 			if (id) {
                 slug = state.albums.find((item)=> {
                     if (item.id === id) {
-                        return item.title
+                        return item
                     }
                 })
 				return slug.title
