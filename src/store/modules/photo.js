@@ -1,5 +1,3 @@
-import { settle } from "when"
-
 export default {
     state: {
         albums: [],
@@ -84,6 +82,20 @@ export default {
                     }
                 })
 				return slug.title
+			} else {
+				return ''
+			}
+        },
+        getOnePhoto: (state) => (id) => {
+            let photo = {}
+			if (id) {
+                photo = state.photos.find((item)=> {
+                    console.log(item.id, '===', id)
+                    if (item.id === Number(id)) {
+                        return item.id
+                    }
+                })
+				return photo
 			} else {
 				return ''
 			}

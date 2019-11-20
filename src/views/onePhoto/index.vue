@@ -1,6 +1,15 @@
 <template>
 	<Main class="onePhoto">
-		onePhoto
+		<h1 class="onePhoto__title">
+			onePhoto
+		</h1>
+		<button 
+			class="onePhoto__back"
+			@click="getBack"
+		>
+			&lt; Back to album
+		</button>
+		{{returnContent}}
 	</Main>
 </template>
 
@@ -22,6 +31,32 @@ export default {
 	},
 	data () {
 		return {
+		}
+	},
+	methods: {
+		getBack() {
+			window.history.back()
+		}
+	},
+	async mounted() {
+		await this.$store.dispatch('loadPhotos', this.getId)
+	},
+	computed: {
+		...mapGetters([
+			'getPhotosId',
+			'getOnePhoto'
+		]),
+		getId() {
+			if (this.getPhotosId && this.$route.params.photos) {
+				return this.getPhotosId(this.$route.params.photos)
+			} else {
+				return ''
+			}
+		},
+		returnContent() {
+			if (this.getOnePhoto && this.$route.params.onePhoto) {
+				return this.getOnePhoto(this.$route.params.onePhoto)
+			}
 		}
 	}
 }

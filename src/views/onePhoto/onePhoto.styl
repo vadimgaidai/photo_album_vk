@@ -1,4 +1,25 @@
 .onePhoto
-	//
+	&__inner
+		width 100%
+		height 100%
+		max-width $maxWidth
+		margin: 0 auto 0
+	&__title
+		color $mainColor
+		text-align center
+	&__back
+		border .1rem solid $cardsBg
+		background-color $cardsBg
+		color $mainBg
+		font-weight 400
+		padding: 1rem
+		border-radius: .5rem
+		cursor pointer
+		transition all $mainTransition ease
+		&:hover 
+			background-color $mainBg
+			color $cardsBg
+		&:active 
+			transform: translateY(3px)
 
 
