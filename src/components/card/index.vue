@@ -37,7 +37,7 @@
 				>
 					<img 
 						:data-src="returnPhoto(item.sizes)" 
-						data-error="https://i.imgur.com/dS8WyYP.png"
+						data-error="https://image.flaticon.com/icons/svg/148/148766.svg"
 						data-loading="https://i.imgur.com/jzm1D5H.gif"
 						:alt="item.id" 
 						class="card__photos--image">
