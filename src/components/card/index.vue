@@ -78,17 +78,15 @@ export default {
 	},
 	methods: {
 		returnPhoto(item) {
-			let width = []
-			item.map((elem) => {
-				width.push(elem.width)
-			})
-			let image = item.find((elem) => {
-				if (elem.width === Math.max.apply(null, width)) {
-					return elem
-				}
-			})
-			return image.src
+			if (this.getMaxSizePhoto) {
+				return this.getMaxSizePhoto(item)
+			}
 		}
+	},
+	computed: {
+		...mapGetters([
+			'getMaxSizePhoto'
+		])
 	}
 }
 </script>
