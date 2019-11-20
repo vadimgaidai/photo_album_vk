@@ -17,7 +17,7 @@
 						:key="card.id"
 						:item="card"
 						:elemets="'photos'"
-						:slug="String(card.id)"
+						:slug="returnSlug + '/' + String(card.id)"
 					/>
 				</div>
 				<div class="photos__column">
@@ -26,7 +26,7 @@
 						:key="card.id"
 						:item="card"
 						:elemets="'photos'"
-						:slug="String(card.id)"
+						:slug="returnSlug + '/' + String(card.id)"
 					/>
 				</div>
 				<div class="photos__column">
@@ -35,7 +35,7 @@
 						:key="card.id"
 						:item="card"
 						:elemets="'photos'"
-						:slug="String(card.id)"
+						:slug="returnSlug + '/' + String(card.id)"
 					/>
 				</div>
 			</div>
@@ -76,13 +76,19 @@ export default {
 	computed: {
 		...mapGetters([
 			'getPhotosId',
-			'getPhotos'
+			'getPhotos',
+			'getAlbumsSlug'
 		]),
 		getId() {
 			if (this.getPhotosId && this.$route.params.photos) {
 				return this.getPhotosId(this.$route.params.photos)
 			} else {
 				return ''
+			}
+		},
+		returnSlug() {
+			if (this.getAlbumsSlug && this.getId && this.getId.id) {
+				return this.getAlbumsSlug(this.getId.id)
 			}
 		},
 		returnPhotos() {

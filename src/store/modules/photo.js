@@ -74,6 +74,19 @@ export default {
 				}
 			})
 			return image.src
+        },
+        getAlbumsSlug: (state) => (id) => {
+            let slug = ''
+			if (id) {
+                slug = state.albums.find((item)=> {
+                    if (item.id === id) {
+                        return item.title
+                    }
+                })
+				return slug.title
+			} else {
+				return ''
+			}
         }
     }
 }
