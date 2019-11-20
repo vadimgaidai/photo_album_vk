@@ -7,6 +7,8 @@ import dotenv from 'dotenv'
 import './registerServiceWorker'
 import './assets/styl/style.styl'
 
+import './plugins/lazy-load'
+
 
 Vue.config.productionTip = false
 

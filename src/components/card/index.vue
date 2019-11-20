@@ -12,10 +12,12 @@
 					class="card__album"
 					v-if="elemets ==='albums'"
 				>
-					<div class="card__album--wrap">
+					<div class="card__album--wrap" v-lazy-container="{ selector: 'img' }">
 						<img 
 							class="card__album--image"
-							:src="item.thumb_src" 
+							:data-src="item.thumb_src" 
+							data-error="https://i.imgur.com/dS8WyYP.png"
+							data-loading="https://i.imgur.com/jzm1D5H.gif"
 							:alt="item.title"
 						>
 					</div>
@@ -31,9 +33,12 @@
 				<div 
 					class="card__photos"
 					v-if="elemets ==='photos'"
+					v-lazy-container="{ selector: 'img' }"
 				>
 					<img 
-						:src="returnPhoto(item.sizes)" 
+						:data-src="returnPhoto(item.sizes)" 
+						data-error="https://i.imgur.com/dS8WyYP.png"
+						data-loading="https://i.imgur.com/jzm1D5H.gif"
 						:alt="item.id" 
 						class="card__photos--image">
 				</div>

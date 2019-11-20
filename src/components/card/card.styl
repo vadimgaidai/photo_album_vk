@@ -18,10 +18,18 @@
 	&__album 
 		display flex
 		align-items center
+		&--wrap 
+			&:first-child 
+				margin-right 3rem
 		&--image
-			margin-right 3rem
+			max-width 13rem
+			width 100%
 			object-fit: contain
 	&__photos
+		display flex
+		align-items center
+		justify-content center
+		flex-direction: column
 		&--image
 			width 100%
 			height 100%
