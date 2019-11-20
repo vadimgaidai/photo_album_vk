@@ -1,6 +1,11 @@
 <template>
-	<Main class="indexPage">
-		<img class="indexPage__image" alt="Vue logo" src="@/assets/images/logo.png">
+	<Main class="indexPage" v-lazy-container="{ selector: 'img' }">
+		<img 
+			class="indexPage__image" 
+			alt="Vue logo" 
+			data-src="https://vuejs.org/images/logo.png"
+			data-loading="https://svgshare.com/i/GGf.svg"
+		>
 		<h1 class="indexPage__title">
 			Welcome to Test "Front-End Developer" Vue.js App
 		</h1>
@@ -31,6 +36,8 @@ export default {
 		flex-direction column
 		&__image
 			animation test-icon infinite 5s linear
+			width 15rem
+			height 15rem
 		&__title
 			text-align center
 			padding-top 4rem

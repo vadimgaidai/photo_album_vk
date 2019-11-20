@@ -8,6 +8,7 @@ import './registerServiceWorker'
 import './assets/styl/style.styl'
 
 import './plugins/lazy-load'
+import './plugins/dropzone'
 
 
 Vue.config.productionTip = false

@@ -3,7 +3,8 @@ export default {
     state: {
         albums: [],
         photos: [],
-        photo: {}
+        photo: {},
+        server: {}
     },
     actions: {
         async loadPhotoAlbums ({commit}) {
@@ -17,6 +18,9 @@ export default {
         }, 
         refreshPhoto({commit}) {
             commit('REFREASH_ONE_PHOTO')
+        },
+        async loadSrcUploadServer({commit}, data) {
+            await commit('SET_SRC_UPLOAD_SERVER', data)
         }
     },
     mutations: {
@@ -69,6 +73,19 @@ export default {
         },
         REFREASH_ONE_PHOTO (state) {
             state.photo = {}
+        },
+        SET_SRC_UPLOAD_SERVER (state, data) {
+            VK.Api.call(
+                'photos.getUploadServer', // название метода API https://vk.com/dev/methods
+                // параметры:
+                {
+                    album_id: data,
+                    v: '5.52', // версия API (обязательный параметр)
+                }, (response) => {
+                    console.log(response)
+                    state.server = response
+                }
+            )
         }
     },
     getters: {
@@ -93,6 +110,9 @@ export default {
         },
         getOnePhoto (state) {
             return state.photo
+        },
+        getUploadServer (state) {
+            return state.server
         },
         getPhotosId: (state) => (slug) => {
 			let idToTitle = 0

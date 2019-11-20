@@ -3,13 +3,13 @@
 		<h1 class="onePhoto__title">
 			Photo
 		</h1>
-		<button 
-			class="onePhoto__back"
-			@click="getBack"
-		>
-			&lt; Back to album
-		</button>
 		<div class="onePhoto__inner">
+			<button 
+				class="onePhoto__back"
+				@click="getBack"
+			>
+				&lt; Back to album
+			</button>
 			<div 
 				class="onePhoto__photo"
 				v-lazy-container="{ selector: 'img' }"

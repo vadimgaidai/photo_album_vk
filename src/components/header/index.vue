@@ -25,6 +25,10 @@ export default {
 				{
 					text: 'Gallery',
 					to: '/gallery'
+				},
+				{
+					text: 'Droap',
+					to: '/droap'
 				}
 			]
 		}
