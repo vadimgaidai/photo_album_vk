@@ -1,7 +1,7 @@
 <template>
 	<Main class="onePhoto">
 		<h1 class="onePhoto__title">
-			onePhoto
+			Photo
 		</h1>
 		<button 
 			class="onePhoto__back"
@@ -9,7 +9,7 @@
 		>
 			&lt; Back to album
 		</button>
-		<div class="onePhoto__content">
+		<div class="onePhoto__inner">
 			<div 
 				class="onePhoto__photo"
 				v-lazy-container="{ selector: 'img' }"
@@ -17,12 +17,20 @@
 				<img 
 					:data-src="returnPhoto" 
 					data-error="https://image.flaticon.com/icons/svg/148/148766.svg"
-					data-loading="https://i.imgur.com/jzm1D5H.gif"
+					data-loading="https://svgshare.com/i/GG8.svg"
 					:alt="returnContent.id" 
 					class="onePhoto__photo--image">
 			</div>
+			<p class="onePhoto__text">
+				ID: {{returnContent.id}}
+			</p>	
+			<p class="onePhoto__text">
+				Date: {{returnDate}}
+			</p>
+			<p class="onePhoto__text" v-show="returnContent.text">
+				Text: {{returnContent.text}}
+			</p>
 		</div>
-		{{returnContent}}
 	</Main>
 </template>
 
@@ -76,6 +84,19 @@ export default {
 			if (this.getMaxSizePhoto && this.returnContent && this.returnContent.sizes) {
 				return this.getMaxSizePhoto(this.returnContent.sizes)
 			}
+		},
+		returnDate () {
+			if (this.returnContent && this.returnContent.date) {
+				let date = new Date(this.returnContent.date * 1000)
+				let day = date.getDate()
+				if (day < 10) day = '0' + day
+				let month = date.getMonth() + 1
+				if (month < 10) month = '0' + month
+				let year = date.getFullYear() % 100
+				if (year < 10) year = '0' + year
+				return day + '.' + month + '.' + year
+			}
+			return ''
 		}
 	}
 }

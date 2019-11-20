@@ -1,7 +1,7 @@
 <template>
   <footer class="footer">
 		<div class="footer__inner">
-			footer
+			Vadim Gaidai
 		</div>
   </footer>
 </template>
