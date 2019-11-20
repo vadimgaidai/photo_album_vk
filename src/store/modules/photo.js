@@ -33,6 +33,7 @@ export default {
                     {
                         album_id: item.id,
                         photo_sizes: 1,
+                        extended: 1,
                         v: '5.52', // версия API (обязательный параметр)
                     }, (response) => {
                         state.photos = response.response.items

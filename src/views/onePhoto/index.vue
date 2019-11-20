@@ -18,17 +18,23 @@
 					:data-src="returnPhoto" 
 					data-error="https://image.flaticon.com/icons/svg/148/148766.svg"
 					data-loading="https://svgshare.com/i/GG8.svg"
-					:alt="returnContent.id" 
+					:alt="returnID" 
 					class="onePhoto__photo--image">
 			</div>
 			<p class="onePhoto__text">
-				ID: {{returnContent.id}}
+				ID: {{returnID}}
 			</p>	
 			<p class="onePhoto__text">
 				Date: {{returnDate}}
 			</p>
-			<p class="onePhoto__text" v-show="returnContent.text">
-				Text: {{returnContent.text}}
+			<p class="onePhoto__text">
+				Likes: {{returnLikes}}
+			</p>
+			<p class="onePhoto__text">
+				Comments: {{returnComments}}
+			</p>
+			<p class="onePhoto__text" v-show="returnText">
+				Text: {{returnText}}
 			</p>
 		</div>
 	</Main>
@@ -97,6 +103,18 @@ export default {
 				return day + '.' + month + '.' + year
 			}
 			return ''
+		},
+		returnID() {
+			return this.returnContent && this.returnContent.id ? this.returnContent.id : ''
+		},
+		returnLikes() {
+			return this.returnContent && this.returnContent.likes && this.returnContent.likes.count ? this.returnContent.likes.count : ''
+		},
+		returnComments() {
+			return this.returnContent && this.returnContent.comments && this.returnContent.comments.count ? this.returnContent.comments.count : ''
+		},
+		returnText() {
+			return this.returnContent && this.returnContent.text ? this.returnContent.text : ''
 		}
 	}
 }
