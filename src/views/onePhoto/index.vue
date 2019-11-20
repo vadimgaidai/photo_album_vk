@@ -26,10 +26,10 @@
 			<p class="onePhoto__text">
 				Date: {{returnDate}}
 			</p>
-			<p class="onePhoto__text">
+			<p class="onePhoto__text" v-show="returnLikes">
 				Likes: {{returnLikes}}
 			</p>
-			<p class="onePhoto__text">
+			<p class="onePhoto__text" v-show="returnComments">
 				Comments: {{returnComments}}
 			</p>
 			<p class="onePhoto__text" v-show="returnText">

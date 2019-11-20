@@ -42,6 +42,7 @@ export default {
                         album_id: item.id,
                         photo_sizes: 1,
                         extended: 1,
+                        count: 1000,
                         v: '5.52', // версия API (обязательный параметр)
                     }, (response) => {
                         state.photos = response.response.items
@@ -74,6 +75,25 @@ export default {
         getAlbums(state) {
             return state.albums
         }, 
+        getAlbumsSlug: (state) => (id) => {
+            let slug = ''
+			if (id) {
+                slug = state.albums.find((item)=> {
+                    if (item.id === id) {
+                        return item
+                    }
+                })
+				return slug.title
+			} else {
+				return ''
+			}
+        },
+        getPhotos(state) {
+            return state.photos
+        },
+        getOnePhoto (state) {
+            return state.photo
+        },
         getPhotosId: (state) => (slug) => {
 			let idToTitle = 0
 			if (slug) {
@@ -86,12 +106,6 @@ export default {
 			} else {
 				return ''
 			}
-        },
-        getPhotos(state) {
-            return state.photos
-        },
-        getOnePhoto (state) {
-            return state.photo
         },
         getMaxSizePhoto: () => (item) => {
             let width = []
@@ -116,19 +130,6 @@ export default {
 				}
 			})
 			return image.src
-        },
-        getAlbumsSlug: (state) => (id) => {
-            let slug = ''
-			if (id) {
-                slug = state.albums.find((item)=> {
-                    if (item.id === id) {
-                        return item
-                    }
-                })
-				return slug.title
-			} else {
-				return ''
-			}
         }
     }
 }
