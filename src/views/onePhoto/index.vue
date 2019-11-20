@@ -61,7 +61,12 @@ export default {
 		}
 	},
 	async mounted() {
-		await this.$store.dispatch('loadPhotos', this.getId)
+		if (this.getId && this.getId.id) {
+			await this.$store.dispatch('loadOnePhoto', {
+				photoID: this.$route.params.onePhoto, 
+				albumID: this.getId.id
+			})
+		}
 	},
 	methods: {
 		getBack() {
@@ -82,8 +87,8 @@ export default {
 			}
 		},
 		returnContent() {
-			if (this.getOnePhoto && this.$route.params.onePhoto) {
-				return this.getOnePhoto(this.$route.params.onePhoto)
+			if (this.getOnePhoto) {
+				return this.getOnePhoto
 			}
 		},
 		returnPhoto() {

@@ -39,6 +39,7 @@
 					/>
 				</div>
 			</div>
+			<button>Загрузить еще</button>
 		</div>
 	</Main>
 </template>

@@ -1,7 +1,9 @@
+
 export default {
     state: {
         albums: [],
-        photos: []
+        photos: [],
+        photo: {}
     },
     actions: {
         async loadPhotoAlbums ({commit}) {
@@ -9,6 +11,9 @@ export default {
         },
         async loadPhotos({commit}, id) {
             await commit('SET_PHOTOS', id)
+        },
+        async loadOnePhoto({commit}, data) {
+            await commit('SET_ONE_PHOTO', data)
         }
     },
     mutations: {
@@ -40,6 +45,21 @@ export default {
                     }
                 )
             }
+        },
+        SET_ONE_PHOTO (state, data) {
+            VK.Api.call(
+                'photos.get', // название метода API https://vk.com/dev/methods
+                // параметры:
+                {
+                    photo_ids: data.photoID,
+                    album_id: data.albumID,
+                    photo_sizes: 1,
+                    extended: 1,
+                    v: '5.52', // версия API (обязательный параметр)
+                }, (response) => {
+                    state.photo = response.response.items[0]
+                }
+            )
         }
     },
     getters: {
@@ -61,6 +81,9 @@ export default {
         },
         getPhotos(state) {
             return state.photos
+        },
+        getOnePhoto (state) {
+            return state.photo
         },
         getMaxSizePhoto: () => (item) => {
             let width = []
@@ -95,19 +118,6 @@ export default {
                     }
                 })
 				return slug.title
-			} else {
-				return ''
-			}
-        },
-        getOnePhoto: (state) => (id) => {
-            let photo = {}
-			if (id) {
-                photo = state.photos.find((item)=> {
-                    if (item.id === Number(id)) {
-                        return item.id
-                    }
-                })
-				return photo
 			} else {
 				return ''
 			}
