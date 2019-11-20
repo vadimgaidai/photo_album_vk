@@ -9,6 +9,19 @@
 		>
 			&lt; Back to album
 		</button>
+		<div class="onePhoto__content">
+			<div 
+				class="onePhoto__photo"
+				v-lazy-container="{ selector: 'img' }"
+			>
+				<img 
+					:data-src="returnPhoto" 
+					data-error="https://image.flaticon.com/icons/svg/148/148766.svg"
+					data-loading="https://i.imgur.com/jzm1D5H.gif"
+					:alt="returnContent.id" 
+					class="onePhoto__photo--image">
+			</div>
+		</div>
 		{{returnContent}}
 	</Main>
 </template>
@@ -33,18 +46,19 @@ export default {
 		return {
 		}
 	},
+	async mounted() {
+		await this.$store.dispatch('loadPhotos', this.getId)
+	},
 	methods: {
 		getBack() {
 			window.history.back()
 		}
 	},
-	async mounted() {
-		await this.$store.dispatch('loadPhotos', this.getId)
-	},
 	computed: {
 		...mapGetters([
 			'getPhotosId',
-			'getOnePhoto'
+			'getOnePhoto',
+			'getMaxSizePhoto'
 		]),
 		getId() {
 			if (this.getPhotosId && this.$route.params.photos) {
@@ -56,6 +70,11 @@ export default {
 		returnContent() {
 			if (this.getOnePhoto && this.$route.params.onePhoto) {
 				return this.getOnePhoto(this.$route.params.onePhoto)
+			}
+		},
+		returnPhoto() {
+			if (this.getMaxSizePhoto && this.returnContent && this.returnContent.sizes) {
+				return this.getMaxSizePhoto(this.returnContent.sizes)
 			}
 		}
 	}

@@ -83,14 +83,14 @@ export default {
 	},
 	methods: {
 		returnPhoto(item) {
-			if (this.getMaxSizePhoto) {
-				return this.getMaxSizePhoto(item)
+			if (this.getMobileSizePhoto) {
+				return this.getMobileSizePhoto(item)
 			}
 		}
 	},
 	computed: {
 		...mapGetters([
-			'getMaxSizePhoto'
+			'getMobileSizePhoto'
 		])
 	}
 }

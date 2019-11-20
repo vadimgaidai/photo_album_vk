@@ -73,6 +73,18 @@ export default {
 			})
 			return image.src
         },
+        getMobileSizePhoto: () => (item) => {
+            let width = []
+			item.map((elem) => {
+				width.push(elem.type)
+			})
+			let image = item.find((elem) => {
+				if (elem.type === "x" || elem.type === "y") {
+					return elem
+				}
+			})
+			return image.src
+        },
         getAlbumsSlug: (state) => (id) => {
             let slug = ''
 			if (id) {
@@ -90,7 +102,6 @@ export default {
             let photo = {}
 			if (id) {
                 photo = state.photos.find((item)=> {
-                    console.log(item.id, '===', id)
                     if (item.id === Number(id)) {
                         return item.id
                     }
