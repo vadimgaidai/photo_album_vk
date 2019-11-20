@@ -16,8 +16,7 @@
 			>
 				<img 
 					:data-src="returnPhoto" 
-					data-error="https://image.flaticon.com/icons/svg/148/148766.svg"
-					data-loading="https://svgshare.com/i/GG8.svg"
+					data-loading="https://svgshare.com/i/GGf.svg"
 					:alt="returnID" 
 					class="onePhoto__photo--image">
 			</div>
@@ -61,12 +60,13 @@ export default {
 		}
 	},
 	async mounted() {
-		if (this.getId && this.getId.id) {
-			await this.$store.dispatch('loadOnePhoto', {
-				photoID: this.$route.params.onePhoto, 
-				albumID: this.getId.id
-			})
-		}
+		await this.$store.dispatch('loadOnePhoto', {
+			photoID: this.$route.params.onePhoto, 
+			albumID: this.getId
+		})
+	},
+	destroyed() {
+		this.$store.dispatch('refreshPhoto')
 	},
 	methods: {
 		getBack() {

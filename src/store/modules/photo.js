@@ -14,6 +14,9 @@ export default {
         },
         async loadOnePhoto({commit}, data) {
             await commit('SET_ONE_PHOTO', data)
+        }, 
+        refreshPhoto({commit}) {
+            commit('REFREASH_ONE_PHOTO')
         }
     },
     mutations: {
@@ -47,19 +50,24 @@ export default {
             }
         },
         SET_ONE_PHOTO (state, data) {
-            VK.Api.call(
-                'photos.get', // название метода API https://vk.com/dev/methods
-                // параметры:
-                {
-                    photo_ids: data.photoID,
-                    album_id: data.albumID,
-                    photo_sizes: 1,
-                    extended: 1,
-                    v: '5.52', // версия API (обязательный параметр)
-                }, (response) => {
-                    state.photo = response.response.items[0]
-                }
-            )
+            if (data && data.photoID && data.albumID && data.albumID.id) {
+                VK.Api.call(
+                    'photos.get', // название метода API https://vk.com/dev/methods
+                    // параметры:
+                    {
+                        photo_ids: data.photoID,
+                        album_id: data.albumID.id,
+                        photo_sizes: 1,
+                        extended: 1,
+                        v: '5.52', // версия API (обязательный параметр)
+                    }, (response) => {
+                        state.photo = response.response.items[0]
+                    }
+                )
+            }
+        },
+        REFREASH_ONE_PHOTO (state) {
+            state.photo = {}
         }
     },
     getters: {
