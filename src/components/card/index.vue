@@ -33,7 +33,7 @@
 					v-if="elemets ==='photos'"
 				>
 					<img 
-						:src="item.photo_1280" 
+						:src="returnPhoto(item.sizes)" 
 						:alt="item.id" 
 						class="card__photos--image">
 				</div>
@@ -74,6 +74,20 @@ export default {
 	data () {
 		return {
 			load: false
+		}
+	},
+	methods: {
+		returnPhoto(item) {
+			let width = []
+			item.map((elem) => {
+				width.push(elem.width)
+			})
+			let image = item.find((elem) => {
+				if (elem.width === Math.max.apply(null, width)) {
+					return elem
+				}
+			})
+			return image.src
 		}
 	}
 }
