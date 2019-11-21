@@ -4,13 +4,34 @@
 			<h1 class="droap__title">
 				Drag’n’drop file uploads
 			</h1>
-			<vue-dropzone 
-				ref="myVueDropzone" 
-				id="dropzone" 
-				:options="dropzoneOptions"
+			<p class="droap__text">
+				* only to albums into which the current user can upload photos
+			</p>
+			<div 
+				class="droap__content" 
 				v-if="getAuthorize === 'connected'"
 			>
-			</vue-dropzone>
+				<select 
+					name="Select"
+					@change="onChangeEvent($event)"
+				>
+					<option selected hidden>Selected album</option>
+					<option
+						v-for="item in getUploadAlbums"
+						:key="item.id"
+						:value="item.id"
+					>
+						{{item.title}}
+					</option>
+				</select>
+				<vue-dropzone 
+					ref="myVueDropzone" 
+					id="dropzone" 
+					v-on:vdropzone-sending="sendingEvent"
+					:options="dropzoneOptions"
+				>
+				</vue-dropzone>
+			</div>
 			<Authorize 
 				:user="getUser"
 				:authorize="getAuthorize"
@@ -18,6 +39,7 @@
 			/>  
 			<button 
 				class="droap__button"
+				v-show="getAuthorize === 'connected' && select"
 			>
 				Save
 			</button>
@@ -44,27 +66,49 @@ export default {
 		Authorize
 	},
 	async mounted() {
-		await this.$store.dispatch('loadSrcUploadServer', '')
-		this.$store.dispatch('checkStatus')
+		await this.$store.dispatch('checkStatus')
 	},
 	data() {
-		return{ 
+		return { 
+			select: false,
+			serverID: null,
 			dropzoneOptions: {
 				url: 'https://httpbin.org/post',
 				thumbnailWidth: 150,
-				maxFilesize: 0.5
+				maxFilesize: 0.5,
+				headers: { "My-Awesome-Header": "header value" }
 			}
 		}
 	},
 	methods: {
 		loadAlbums() {
-			this.$store.dispatch('loadPhotoAlbums')
+			this.$store.dispatch('loadUploadPhotoAlbums')
+		},
+		onChangeEvent(event) {
+			VK.Api.call(
+                'photos.getUploadServer', // название метода API https://vk.com/dev/methods
+                // параметры:
+                {
+					album_id: Number(event.target.value),
+					group_id: 0,
+                    v: '5.52', // версия API (обязательный параметр)
+                }, (response) => {
+                    if(response && response.response && response.response.upload_url) {
+						console.log(response.response.upload_url)
+                        this.dropzoneOptions.url = response.response.upload_url
+                    }
+                }
+            )
+		},
+		sendingEvent (file, xhr, formData) {
+			console.log(file)
 		}
 	},
 	computed: {
 		...mapGetters([
-			'getAlbums',
+			'getUploadAlbums',
 			'getAuthorize',
+			'getUploadServer',
 			'getUser'
 		])
 	},

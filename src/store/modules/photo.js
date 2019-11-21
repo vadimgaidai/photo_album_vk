@@ -2,13 +2,17 @@
 export default {
     state: {
         albums: [],
+        uploadAlbums: [],
         photos: [],
         photo: {},
         server: {}
     },
     actions: {
-        async loadPhotoAlbums ({commit}) {
-            await commit('SET_PHOTO_ALBUMS')
+        async loadAllPhotoAlbums ({commit}) {
+            await commit('SET_ALL_PHOTO_ALBUMS')
+        },
+        async loadUploadPhotoAlbums ({commit}) {
+            await commit('SET_UPLOAD_PHOTO_ALBUMS')
         },
         async loadPhotos({commit}, id) {
             await commit('SET_PHOTOS', id)
@@ -24,7 +28,7 @@ export default {
         }
     },
     mutations: {
-        SET_PHOTO_ALBUMS (state) {
+        SET_ALL_PHOTO_ALBUMS (state) {
             VK.Api.call(
                 'photos.getAlbums', // название метода API https://vk.com/dev/methods
                 // параметры:
@@ -34,6 +38,18 @@ export default {
                     v: '5.52', // версия API (обязательный параметр)
                 }, (response) => {
                     state.albums = response.response.items
+                }
+            )
+        },
+        SET_UPLOAD_PHOTO_ALBUMS (state) {
+            VK.Api.call(
+                'photos.getAlbums', // название метода API https://vk.com/dev/methods
+                // параметры:
+                {
+                    need_covers: 1,
+                    v: '5.52', // версия API (обязательный параметр)
+                }, (response) => {
+                    state.uploadAlbums = response.response.items
                 }
             )
         },
@@ -79,18 +95,24 @@ export default {
                 'photos.getUploadServer', // название метода API https://vk.com/dev/methods
                 // параметры:
                 {
-                    album_id: data,
+                    album_id: Number(data),
                     v: '5.52', // версия API (обязательный параметр)
                 }, (response) => {
-                    console.log(response)
-                    state.server = response
+                    if(response && response.response) {
+                        state.server = response.response
+                        console.log(response.response)
+                        console.log(state.server)
+                    }
                 }
             )
         }
     },
     getters: {
-        getAlbums(state) {
+        getAllAlbums(state) {
             return state.albums
+        }, 
+        getUploadAlbums(state) {
+            return state.uploadAlbums
         }, 
         getAlbumsSlug: (state) => (id) => {
             let slug = ''
