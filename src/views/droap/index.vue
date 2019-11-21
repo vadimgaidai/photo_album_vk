@@ -8,6 +8,9 @@
 				:user="getUser"
 				:authorize="getAuthorize"
 			/>  
+			<p class="droap__text">
+				* only to albums into which the current user can upload photos
+			</p>
 			<select 
 				name="Select"
 				@change="onChangeEvent($event)"
