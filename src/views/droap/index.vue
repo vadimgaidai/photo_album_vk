@@ -57,6 +57,7 @@ export default {
 	},
 	async mounted() {
 		await this.$store.dispatch('checkStatus')
+		this.getAuthorize === 'connected' ? this.loadAlbums() : null
 	},
 	data() {
 		return { 

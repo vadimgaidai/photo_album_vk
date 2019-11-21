@@ -10,7 +10,7 @@
 			>
 				&lt; Back to gallery
 			</button>
-			<div class="photos__content">
+			<div class="photos__content" v-if="width >= 768">
 				<div class="photos__column">
 					<Card 
 						v-for="card in filterOne"
@@ -32,6 +32,26 @@
 				<div class="photos__column">
 					<Card 
 						v-for="card in filterThree"
+						:key="card.id"
+						:item="card"
+						:elemets="'photos'"
+						:slug="returnSlug + '/' + String(card.id)"
+					/>
+				</div>
+			</div>
+			<div class="photos__content" v-else>
+				<div class="photos__column">
+					<Card 
+						v-for="card in filterOneMobile"
+						:key="card.id"
+						:item="card"
+						:elemets="'photos'"
+						:slug="returnSlug + '/' + String(card.id)"
+					/>
+				</div>
+				<div class="photos__column">
+					<Card 
+						v-for="card in filterTwoMobile"
 						:key="card.id"
 						:item="card"
 						:elemets="'photos'"
@@ -63,14 +83,20 @@ export default {
 	},
 	async mounted() {
 		await this.$store.dispatch('loadPhotos', this.getId)
+		window.addEventListener('resize', this.returnWidth)
+		this.returnWidth()
 	},
 	data () {
 		return {
+			width: 0
 		}
 	},
 	methods: {
 		getBack () {
 			this.$router.push('/gallery')
+		},
+		returnWidth() {
+			this.width =  window.screen.availWidth
 		}
 	},
 	computed: {
@@ -120,6 +146,24 @@ export default {
 			let newArray = []
 			for (let i = 0; i < this.returnPhotos.length; i++) {
 				if ((i % 3) === 2) {
+					newArray.push(this.returnPhotos[i])
+				}
+			}
+			return newArray
+		},
+		filterOneMobile () {
+			let newArray = []
+			for (let i = 0; i < this.returnPhotos.length; i++) {
+				if ((i % 2) === 0) {
+					newArray.push(this.returnPhotos[i])
+				}
+			}
+			return newArray
+		},
+		filterTwoMobile () {
+			let newArray = []
+			for (let i = 0; i < this.returnPhotos.length; i++) {
+				if ((i % 2) === 1) {
 					newArray.push(this.returnPhotos[i])
 				}
 			}
