@@ -57,6 +57,7 @@ export default {
 	},
 	data () {
 		return {
+			width: 0
 		}
 	},
 	async mounted() {
@@ -64,6 +65,8 @@ export default {
 			photoID: this.$route.params.onePhoto, 
 			albumID: this.getId
 		})
+		window.addEventListener('resize', this.returnWidth)
+		this.returnWidth()
 	},
 	destroyed() {
 		this.$store.dispatch('refreshPhoto')
@@ -71,13 +74,17 @@ export default {
 	methods: {
 		getBack() {
 			window.history.back()
+		},
+		returnWidth() {
+			this.width =  window.screen.availWidth
 		}
 	},
 	computed: {
 		...mapGetters([
 			'getPhotosId',
 			'getOnePhoto',
-			'getMaxSizePhoto'
+			'getMaxSizePhoto',
+			'getMobileSizePhoto'
 		]),
 		getId() {
 			if (this.getPhotosId && this.$route.params.photos) {
@@ -92,8 +99,10 @@ export default {
 			}
 		},
 		returnPhoto() {
-			if (this.getMaxSizePhoto && this.returnContent && this.returnContent.sizes) {
+			if (this.getMaxSizePhoto && this.returnContent && this.returnContent.sizes && this.width >= 768) {
 				return this.getMaxSizePhoto(this.returnContent.sizes)
+			} else if (this.getMobileSizePhoto && this.returnContent && this.returnContent.sizes && this.width <= 768) {
+				return this.getMobileSizePhoto(this.returnContent.sizes)
 			}
 		},
 		returnDate () {
