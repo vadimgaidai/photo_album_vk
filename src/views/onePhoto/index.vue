@@ -67,11 +67,15 @@ export default {
 		})
 		window.addEventListener('resize', this.returnWidth)
 		this.returnWidth()
+		this.getAuthorize && this.getAuthorize === 'connected' ? null : this.$router.push('/gallery')
 	},
 	destroyed() {
 		this.$store.dispatch('refreshPhoto')
 	},
 	methods: {
+		...mapActions([
+			'checkStatus'
+		]),
 		getBack() {
 			window.history.back()
 		},
@@ -81,6 +85,7 @@ export default {
 	},
 	computed: {
 		...mapGetters([
+			'getAuthorize',
 			'getPhotosId',
 			'getOnePhoto',
 			'getMaxSizePhoto',
@@ -129,6 +134,11 @@ export default {
 		},
 		returnText() {
 			return this.returnContent && this.returnContent.text ? this.returnContent.text : ''
+		}
+	},
+	watch: {
+		'getAuthorize' () {
+			this.getAuthorize === 'connected' ? null : this.$router.push('/gallery')
 		}
 	}
 }

@@ -95,6 +95,7 @@ export default {
 		await this.$store.dispatch('loadPhotos', this.getId)
 		window.addEventListener('resize', this.returnWidth)
 		this.returnWidth()
+		this.getAuthorize && this.getAuthorize === 'connected' ? null : this.$router.push('/gallery')
 	},
 	data () {
 		return {
@@ -102,15 +103,19 @@ export default {
 		}
 	},
 	methods: {
+		...mapActions([
+			'checkStatus'
+		]),
 		getBack () {
 			this.$router.push('/gallery')
 		},
 		returnWidth() {
-			this.width =  window.screen.availWidth
+			this.width = window.screen.availWidth
 		}
 	},
 	computed: {
 		...mapGetters([
+			'getAuthorize',
 			'getPhotosId',
 			'getPhotos',
 			'getAlbumsSlug'
@@ -185,6 +190,11 @@ export default {
 				}
 			}
 			return newArray
+		}
+	},
+	watch: {
+		'getAuthorize' () {
+			this.getAuthorize && this.getAuthorize === 'connected' ? null : this.$router.push('/gallery')
 		}
 	}
 }
