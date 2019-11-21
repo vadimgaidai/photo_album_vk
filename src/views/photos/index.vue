@@ -13,7 +13,9 @@
 			<div class="photos__content" v-if="width >= 768">
 				<div class="photos__column">
 					<Card 
-						v-for="card in filterOne"
+						v-for="(card, index) in filterOne"
+						:index="index"
+						:length="returnPhotosLength"
 						:key="card.id"
 						:item="card"
 						:elemets="'photos'"
@@ -22,16 +24,20 @@
 				</div>
 				<div class="photos__column">
 					<Card 
-						v-for="card in filterTwo"
+						v-for="(card, index) in filterTwo"
 						:key="card.id"
 						:item="card"
+						:index="index"
+						:length="returnPhotosLength"
 						:elemets="'photos'"
 						:slug="returnSlug + '/' + String(card.id)"
 					/>
 				</div>
 				<div class="photos__column">
 					<Card 
-						v-for="card in filterThree"
+						v-for="(card, index) in filterThree"
+						:index="index"
+						:length="returnPhotosLength"
 						:key="card.id"
 						:item="card"
 						:elemets="'photos'"
@@ -42,7 +48,9 @@
 			<div class="photos__content" v-else>
 				<div class="photos__column">
 					<Card 
-						v-for="card in filterOneMobile"
+						v-for="(card, index) in filterOneMobile"
+						:index="index"
+						:length="returnPhotosLength"
 						:key="card.id"
 						:item="card"
 						:elemets="'photos'"
@@ -51,7 +59,9 @@
 				</div>
 				<div class="photos__column">
 					<Card 
-						v-for="card in filterTwoMobile"
+						v-for="(card, index) in filterTwoMobile"
+						:index="index"
+						:length="returnPhotosLength"
 						:key="card.id"
 						:item="card"
 						:elemets="'photos'"
@@ -122,6 +132,13 @@ export default {
 				return this.getPhotos
 			} else {
 				return []
+			}
+		},
+		returnPhotosLength() {
+			if (this.getPhotos && this.getPhotos.length > 0) {
+				return this.getPhotos.length
+			} else {
+				return ''
 			}
 		},
 		filterOne () {

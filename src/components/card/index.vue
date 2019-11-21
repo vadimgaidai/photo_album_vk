@@ -2,6 +2,7 @@
 	<router-link 
 		:to="slug"
 		class="card"
+		:style="'z-index:' + (length - index)  + ';'"
 	>
 		<transition name="content" mode="out-in">
 			<div 
@@ -42,6 +43,12 @@
 						:alt="item.id" 
 						class="card__photos--image">
 				</div>
+				<div class="card__tooltip" v-if="elemets ==='photos'">
+					<p>ID: {{item.id}}</p>
+					<p>Comments: {{item.comments.count}}</p>
+					<p>Date: {{item.date}}</p>
+					<p>Likes: {{item.likes.count}}</p>
+				</div>
 			</div>
 			<Load v-else/>
 		</transition>
@@ -63,6 +70,14 @@ export default {
 		slug: {
 			type: String, 
 			default: ''
+		},
+		index: {
+			type: Number,
+			default: 0
+		},
+		length: {
+			type: Number,
+			default: 0
 		},
 		item: {
 			type: Object,
