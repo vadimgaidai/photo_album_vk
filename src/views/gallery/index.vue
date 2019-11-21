@@ -11,10 +11,10 @@
 			<div class="gallery__wrap" v-if="getAuthorize === 'connected'">
 				<transition name="content" mode="out-in">
 					<div
-						v-if="getAlbums && getAlbums.length > 0"
+						v-if="getAllAlbums && getAllAlbums.length > 0"
 					>
 						<Card 
-							v-for="card in getAlbums"
+							v-for="card in getAllAlbums"
 							:key="card.id"
 							:item="card"
 							:elemets="'albums'"
@@ -59,14 +59,14 @@ export default {
 	},
 	methods: {
 		loadAlbums() {
-			this.$store.dispatch('loadPhotoAlbums')
+			this.$store.dispatch('loadAllPhotoAlbums')
 		}
 	},
 	computed: {
 		...mapGetters([
 			'getAuthorize',
 			'getUser',
-			'getAlbums'
+			'getAllAlbums'
 		])
 	},
 	watch: {

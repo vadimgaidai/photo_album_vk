@@ -4,23 +4,32 @@
 			<h1 class="droap__title">
 				Drag’n’drop file uploads
 			</h1>
+			<Authorize 
+				:user="getUser"
+				:authorize="getAuthorize"
+			/>  
+			<select 
+				name="Select"
+				@change="onChangeEvent($event)"
+				v-show="getAuthorize === 'connected'"
+				class="droap__select"
+			>
+				<option selected hidden>Selected album</option>
+				<option
+					v-for="item in getUploadAlbums"
+					:key="item.id"
+					:value="item.id"
+				>
+					{{item.title}}
+				</option>
+			</select>
 			<vue-dropzone 
 				ref="myVueDropzone" 
 				id="dropzone" 
 				:options="dropzoneOptions"
-				v-if="getAuthorize === 'connected'"
+				v-show="getAuthorize === 'connected' && select"
 			>
 			</vue-dropzone>
-			<Authorize 
-				:user="getUser"
-				:authorize="getAuthorize"
-				v-else
-			/>  
-			<button 
-				class="droap__button"
-			>
-				Save
-			</button>
 		</div>
 	</Main>
 </template>
@@ -44,26 +53,31 @@ export default {
 		Authorize
 	},
 	async mounted() {
-		await this.$store.dispatch('loadSrcUploadServer', '')
-		this.$store.dispatch('checkStatus')
+		await this.$store.dispatch('checkStatus')
 	},
 	data() {
-		return{ 
+		return { 
+			select: false,
 			dropzoneOptions: {
 				url: 'https://httpbin.org/post',
 				thumbnailWidth: 150,
-				maxFilesize: 0.5
+				maxFilesize: 0.5,
+				headers: { "My-Awesome-Header": "header value" }
 			}
 		}
 	},
 	methods: {
 		loadAlbums() {
-			this.$store.dispatch('loadPhotoAlbums')
+			this.$store.dispatch('loadUploadPhotoAlbums')
+		},
+		onChangeEvent(event) {
+			this.$store.dispatch('loadSrcUploadServer', event.target.value)
+			this.select = true
 		}
 	},
 	computed: {
 		...mapGetters([
-			'getAlbums',
+			'getUploadAlbums',
 			'getAuthorize',
 			'getUser'
 		])
