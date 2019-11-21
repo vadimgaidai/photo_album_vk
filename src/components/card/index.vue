@@ -45,9 +45,22 @@
 				</div>
 				<div class="card__tooltip" v-if="elemets ==='photos'">
 					<p>ID: {{item.id}}</p>
-					<p>Comments: {{item.comments.count}}</p>
-					<p>Date: {{item.date}}</p>
-					<p>Likes: {{item.likes.count}}</p>
+					<p>Date: {{returnDate(item.date)}}</p>
+					<p
+						v-show="item.likes.count"
+					>
+						Likes: {{item.likes.count}}
+					</p>
+					<p
+						v-show="item.comments.count"
+					>
+						Comments: {{item.comments.count}}
+					</p>
+					<p 
+						v-show="item.comments.text"
+					>
+						Text: {{item.comments.text}}
+					</p>
 				</div>
 			</div>
 			<Load v-else/>
@@ -101,6 +114,19 @@ export default {
 			if (this.getMobileSizePhoto) {
 				return this.getMobileSizePhoto(item)
 			}
+		},
+		returnDate (item) {
+			if (item) {
+				let date = new Date(item * 1000)
+				let day = date.getDate()
+				if (day < 10) day = '0' + day
+				let month = date.getMonth() + 1
+				if (month < 10) month = '0' + month
+				let year = date.getFullYear() % 100
+				if (year < 10) year = '0' + year
+				return day + '.' + month + '.' + year
+			}
+			return ''
 		}
 	},
 	computed: {
